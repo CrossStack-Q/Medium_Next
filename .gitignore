@@ -5,12 +5,15 @@
 /.pnp
 .pnp.js
 
+/sanitymedium/node_modules
+
 # testing
 /coverage
 
 # next.js
 /.next/
 /out/
+
 
 # production
 /build
