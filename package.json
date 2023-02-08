@@ -2,8 +2,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "other":"next dev && cd ./sanitymedium && npm start",
     "build": "next build",
-    "start": "next start"
+    "start": "next start && cd ./sanitymedium && npm start"
   },
   "dependencies": {
     "@portabletext/react": "^1.0.6",

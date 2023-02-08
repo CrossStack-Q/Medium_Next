@@ -4,17 +4,37 @@ import { sanityClient, urlFor } from '../../sanity'
 import Image from 'next/image'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import PortableText from 'react-portable-text'
 import { PortableText } from '@portabletext/react'
 import { Post } from '../../typing'
 interface Props {
   post: Post
+  src: string
+  alt: string
+  value: string
+  otherProp?: any;
 }
+
+
 
 interface IFormInput {
   _id: string;
   name: string;
   email:string;
+  value: string;
   comment:string;
 }
 
@@ -45,13 +65,17 @@ function Post({ post }: Props) {
 
 
 
-
-  function createMarkup(c) {
-    return { __html: c }
-  }
+  function createMarkup() { return {__html: `${post.description}`}; };
+  // function createMarkup(c) {
+  //   return { __html: c }
+  // }
   const ptComponents = {
     types: {
-      image: ({ value }) => {
+
+
+
+
+      image: ({ value }:{value:any}) => {
         if (!value?.asset?._ref) {
           return null
         }
@@ -59,20 +83,10 @@ function Post({ post }: Props) {
           <img
             alt={value.alt || ' '}
             loading="lazy"
-            src={urlFor(value)
-              .width(1640)
-              .height(1000)
-              .fit('max')
-              .auto('format')}
+            src={urlFor(value).url()!}
           />
         )
-      },
-      h1: ({ value }) => {
-        if (!value?.asset?._ref) {
-          return null
-        }
-        return <h1>{value}</h1>
-      },
+      }
     },
   }
 
@@ -103,7 +117,7 @@ function Post({ post }: Props) {
             {new Date(post._createdAt).toLocaleString()}
           </p>
         </div>
-        <div dangerouslySetInnerHTML={createMarkup(post.description)}></div>
+        <div dangerouslySetInnerHTML={createMarkup()}></div>
         <div className="mt-10">
           {/* <PortableText
             dataset="process.env.NEXT_PUBLIC_SANITY_DATASET"
@@ -135,7 +149,7 @@ function Post({ post }: Props) {
             projectId="process.env.NEXT_PUBLIC_SANITY_PROJECT_ID"
           /> */}
 
-          <PortableText value={body} components={ptComponents} />
+          {/* <PortableText value={body} components={ptComponents} /> */}
         </div>
       </article>
 
